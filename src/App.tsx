@@ -43,6 +43,8 @@ function App() {
     'Red-Black': { result: '#8B0000', name: 'Dark Red', emoji: '❤️' },
     'Black-Blue': { result: '#000080', name: 'Dark Blue', emoji: '💙' },
     'Blue-Black': { result: '#000080', name: 'Dark Blue', emoji: '💙' },
+    'Yellow-Black': { result: '#8B8000', name: 'Dark Yellow', emoji: '' },
+    'Black-Yellow': { result: '#8B8000', name: 'Dark Yellow', emoji: '' },
   };
 
   const createStar = () => {
