@@ -152,9 +152,11 @@ function App() {
 
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-10 mb-4 sm:mb-6 border-4 sm:border-8 border-purple-400">
           <div className="bg-gradient-to-r from-yellow-200 to-orange-200 rounded-2xl sm:rounded-3xl p-3 sm:p-6 mb-4 sm:mb-8 border-2 sm:border-4 border-yellow-400 shadow-lg">
-            <p className="text-center text-sm sm:text-2xl md:text-3xl font-black text-purple-800">
-              1️⃣ Pick a color → 2️⃣ Pick another color → 3️⃣ Press MIX!
-            </p>
+            <div className="text-center text-xs sm:text-2xl md:text-3xl font-black text-purple-800 space-y-1 sm:space-y-0">
+              <div className="sm:inline">1️⃣ Pick a color</div>
+              <div className="sm:inline sm:before:content-['_→_']">2️⃣ Pick another color</div>
+              <div className="sm:inline sm:before:content-['_→_']">3️⃣ Press MIX!</div>
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mb-4 sm:mb-8">
