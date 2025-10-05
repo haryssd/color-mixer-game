@@ -69,7 +69,7 @@ function App() {
 
   const mixColors = () => {
     if (!dropZone1 || !dropZone2) {
-      setResultText('Pick 2 colors first! 👆');
+      setResultText('Pick 2 colors first!');
       setResultColor(null);
       return;
     }
@@ -92,7 +92,7 @@ function App() {
       setResultColor(dropZone1.value);
       setResultText(`${dropZone1.emoji} + ${dropZone2.emoji} = ${dropZone1.emoji} ${dropZone1.name}!`);
     } else {
-      setResultText(`Hmm... try different colors! 🤔`);
+      setResultText(`Hmm... try different colors!`);
       setResultColor('#D3D3D3');
     }
   };
@@ -105,63 +105,63 @@ function App() {
     setShowSuccess(false);
   };
 
-return (
-  <div className="min-h-screen bg-gradient-to-br from-pink-300 via-purple-300 to-blue-300 p-4">
-    {/* Score - Fixed top-right corner */}
-    <div className="fixed top-4 right-4 z-50">
-      <div className="bg-yellow-400 px-8 py-3 rounded-full border-4 border-yellow-600 shadow-lg">
-        <div className="flex items-center gap-4">
-          <p className="text-3xl font-black text-purple-800">⭐ {score}</p>
-          {score > 0 && (
-            <button
-              onClick={() => setScore(0)}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full text-sm font-bold transition-all hover:scale-110 active:scale-95"
-            >
-              Reset
-            </button>
-          )}
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-pink-300 via-purple-300 to-blue-300 p-2 sm:p-4">
+      {/* Score - Fixed top-right corner */}
+      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50">
+        <div className="bg-yellow-400 px-4 py-2 sm:px-8 sm:py-3 rounded-full border-2 sm:border-4 border-yellow-600 shadow-lg">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <p className="text-xl sm:text-3xl font-black text-purple-800">⭐ {score}</p>
+            {score > 0 && (
+              <button
+                onClick={() => setScore(0)}
+                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all hover:scale-110 active:scale-95"
+              >
+                Reset
+              </button>
+            )}
+          </div>
         </div>
       </div>
-    </div>
 
-    <div className="max-w-5xl mx-auto">
-      {stars.map(star => (
-        <div
-          key={star.id}
-          className="fixed pointer-events-none animate-ping"
-          style={{
-            left: `${star.x}%`,
-            top: `${star.y}%`,
-          }}
-        >
-          <Star className="text-yellow-400" size={40} fill="currentColor" />
+      <div className="max-w-5xl mx-auto">
+        {stars.map(star => (
+          <div
+            key={star.id}
+            className="fixed pointer-events-none animate-ping"
+            style={{
+              left: `${star.x}%`,
+              top: `${star.y}%`,
+            }}
+          >
+            <Star className="text-yellow-400" size={40} fill="currentColor" />
+          </div>
+        ))}
+
+        <div className="text-center mb-4 sm:mb-6 pt-16 sm:pt-4">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white mb-2 sm:mb-3 drop-shadow-lg" style={{
+            textShadow: '3px 3px 0px #FF1493, 6px 6px 0px #9370DB'
+          }}>
+            🎨 COLOR MIXER! 🎨
+          </h1>
+          <p className="text-xl sm:text-3xl font-bold text-white drop-shadow-md">Mix colors and make magic!</p>
+          <p className="text-sm sm:text-xl font-bold text-purple-800 mt-2 bg-white bg-opacity-80 inline-block px-4 py-1 sm:px-6 sm:py-2 rounded-full">
+            by Teacher Nisrina
+          </p>
         </div>
-      ))}
 
-      <div className="text-center mb-6">
-        <h1 className="text-6xl md:text-7xl font-black text-white mb-3 drop-shadow-lg" style={{
-          textShadow: '4px 4px 0px #FF1493, 8px 8px 0px #9370DB'
-        }}>
-          🎨 COLOR MIXER! 🎨
-        </h1>
-        <p className="text-3xl font-bold text-white drop-shadow-md">Mix colors and make magic! ✨</p>
-        <p className="text-xl font-bold text-purple-800 mt-2 bg-white bg-opacity-80 inline-block px-6 py-2 rounded-full">
-          by Teacher Nisrina
-        </p>
-      </div>
-
-        <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 mb-6 border-8 border-purple-400">
-          <div className="bg-gradient-to-r from-yellow-200 to-orange-200 rounded-3xl p-6 mb-8 border-4 border-yellow-400 shadow-lg">
-            <p className="text-center text-2xl md:text-3xl font-black text-purple-800">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-10 mb-4 sm:mb-6 border-4 sm:border-8 border-purple-400">
+          <div className="bg-gradient-to-r from-yellow-200 to-orange-200 rounded-2xl sm:rounded-3xl p-3 sm:p-6 mb-4 sm:mb-8 border-2 sm:border-4 border-yellow-400 shadow-lg">
+            <p className="text-center text-sm sm:text-2xl md:text-3xl font-black text-purple-800">
               1️⃣ Pick a color → 2️⃣ Pick another color → 3️⃣ Press MIX!
             </p>
           </div>
 
-          <div className="flex flex-row justify-center items-center gap-6 mb-8">
-            <div className="text-center">
-              <p className="text-2xl font-black text-purple-700 mb-3">First Color 👇</p>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mb-4 sm:mb-8">
+            <div className="text-center w-full sm:w-auto">
+              <p className="text-lg sm:text-2xl font-black text-purple-700 mb-2 sm:mb-3">First Color</p>
               <div
-                className="w-48 h-48 rounded-3xl border-8 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 shadow-xl"
+                className="w-36 h-36 sm:w-48 sm:h-48 mx-auto rounded-2xl sm:rounded-3xl border-4 sm:border-8 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 shadow-xl"
                 style={{
                   backgroundColor: dropZone1 ? dropZone1.value : '#f8f8f8',
                   borderColor: dropZone1 ? dropZone1.value : '#ccc'
@@ -169,26 +169,26 @@ return (
               >
                 {dropZone1 ? (
                   <>
-                    <span className="text-7xl mb-2">{dropZone1.emoji}</span>
-                    <span className="text-2xl font-bold" style={{
+                    <span className="text-5xl sm:text-7xl mb-1 sm:mb-2">{dropZone1.emoji}</span>
+                    <span className="text-lg sm:text-2xl font-bold" style={{
                       color: dropZone1.name === 'White' ? '#333' : '#fff',
                       textShadow: dropZone1.name === 'White' ? 'none' : '2px 2px 4px rgba(0,0,0,0.5)'
                     }}>{dropZone1.name}</span>
                   </>
                 ) : (
-                  <span className="text-8xl">❓</span>
+                  <span className="text-6xl sm:text-8xl">❓</span>
                 )}
               </div>
             </div>
 
             <div className="flex items-center">
-              <span className="text-8xl font-black text-purple-600 animate-pulse">+</span>
+              <span className="text-5xl sm:text-8xl font-black text-purple-600 animate-pulse">+</span>
             </div>
 
-            <div className="text-center">
-              <p className="text-2xl font-black text-purple-700 mb-3">Second Color 👇</p>
+            <div className="text-center w-full sm:w-auto">
+              <p className="text-lg sm:text-2xl font-black text-purple-700 mb-2 sm:mb-3">Second Color</p>
               <div
-                className="w-48 h-48 rounded-3xl border-8 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 shadow-xl"
+                className="w-36 h-36 sm:w-48 sm:h-48 mx-auto rounded-2xl sm:rounded-3xl border-4 sm:border-8 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 shadow-xl"
                 style={{
                   backgroundColor: dropZone2 ? dropZone2.value : '#f8f8f8',
                   borderColor: dropZone2 ? dropZone2.value : '#ccc'
@@ -196,20 +196,20 @@ return (
               >
                 {dropZone2 ? (
                   <>
-                    <span className="text-7xl mb-2">{dropZone2.emoji}</span>
-                    <span className="text-2xl font-bold" style={{
+                    <span className="text-5xl sm:text-7xl mb-1 sm:mb-2">{dropZone2.emoji}</span>
+                    <span className="text-lg sm:text-2xl font-bold" style={{
                       color: dropZone2.name === 'White' ? '#333' : '#fff',
                       textShadow: dropZone2.name === 'White' ? 'none' : '2px 2px 4px rgba(0,0,0,0.5)'
                     }}>{dropZone2.name}</span>
                   </>
                 ) : (
-                  <span className="text-8xl">❓</span>
+                  <span className="text-6xl sm:text-8xl">❓</span>
                 )}
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 md:grid-cols-5 gap-4 mb-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-4 mb-4 sm:mb-8 max-w-4xl mx-auto">
             {colors.map((color) => (
               <button
                 key={color.name}
@@ -217,33 +217,33 @@ return (
                   if (!dropZone1) selectColor(color, 1);
                   else if (!dropZone2) selectColor(color, 2);
                 }}
-                className="h-28 rounded-2xl transition-all hover:scale-110 active:scale-95 shadow-xl font-black text-xl flex flex-col items-center justify-center gap-2"
+                className="h-20 sm:h-28 rounded-xl sm:rounded-2xl transition-all hover:scale-110 active:scale-95 shadow-xl font-black text-base sm:text-xl flex flex-col items-center justify-center gap-1 sm:gap-2"
                 style={{
                   backgroundColor: color.value,
-                  borderWidth: '6px',
+                  borderWidth: '4px',
                   borderColor: '#333',
                   color: color.name === 'White' ? '#000' : '#FFF',
                   textShadow: color.name === 'White' ? 'none' : '2px 2px 4px rgba(0,0,0,0.8)'
                 }}
               >
-                <span className="text-4xl">{color.emoji}</span>
-                <span>{color.name}</span>
+                <span className="text-2xl sm:text-4xl">{color.emoji}</span>
+                <span className="text-xs sm:text-base">{color.name}</span>
               </button>
             ))}
           </div>
 
-          <div className="flex flex-col md:flex-row justify-center gap-4 mb-8">
+          <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-8">
             <button
               onClick={mixColors}
-              className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white px-16 py-6 rounded-3xl text-4xl font-black shadow-2xl hover:scale-110 transition-all active:scale-95"
-              style={{ borderWidth: '6px', borderColor: '#166534' }}
+              className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white px-8 py-4 sm:px-16 sm:py-6 rounded-2xl sm:rounded-3xl text-2xl sm:text-4xl font-black shadow-2xl hover:scale-105 transition-all active:scale-95 w-full"
+              style={{ borderWidth: '4px', borderColor: '#166534' }}
             >
               🧪 MIX IT! 🧪
             </button>
             <button
               onClick={clearAll}
-              className="bg-gradient-to-r from-red-400 via-orange-500 to-red-600 text-white px-12 py-6 rounded-3xl text-3xl font-black shadow-2xl hover:scale-110 transition-all active:scale-95 flex items-center justify-center gap-3"
-              style={{ borderWidth: '6px', borderColor: '#991b1b' }}
+              className="bg-gradient-to-r from-red-400 via-orange-500 to-red-600 text-white px-8 py-4 sm:px-12 sm:py-6 rounded-2xl sm:rounded-3xl text-xl sm:text-3xl font-black shadow-2xl hover:scale-105 transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 w-full"
+              style={{ borderWidth: '4px', borderColor: '#991b1b' }}
             >
               🔄 START OVER
             </button>
@@ -253,42 +253,42 @@ return (
             <div className="relative">
               {showSuccess && (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                  <Sparkles size={120} className="text-yellow-400 animate-spin" />
+                  <Sparkles size={80} className="sm:w-[120px] sm:h-[120px] text-yellow-400 animate-spin" />
                 </div>
               )}
               <div
-                className="w-full min-h-48 rounded-3xl border-8 border-purple-600 flex items-center justify-center transition-all duration-700 shadow-2xl p-6"
+                className="w-full min-h-32 sm:min-h-48 rounded-2xl sm:rounded-3xl border-4 sm:border-8 border-purple-600 flex items-center justify-center transition-all duration-700 shadow-2xl p-4 sm:p-6"
                 style={{ backgroundColor: resultColor }}
               >
-                <div className="bg-white bg-opacity-95 px-8 py-6 rounded-2xl shadow-lg border-4 border-purple-400">
-                  <p className="text-3xl md:text-4xl font-black text-center text-purple-800">{resultText}</p>
+                <div className="bg-white bg-opacity-95 px-4 py-3 sm:px-8 sm:py-6 rounded-xl sm:rounded-2xl shadow-lg border-2 sm:border-4 border-purple-400">
+                  <p className="text-xl sm:text-3xl md:text-4xl font-black text-center text-purple-800">{resultText}</p>
                 </div>
               </div>
             </div>
           )}
         </div>
 
-        <div className="bg-white rounded-3xl shadow-2xl p-6 border-8 border-pink-400">
-          <h2 className="text-3xl font-black text-purple-700 mb-6 text-center">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 border-4 sm:border-8 border-pink-400">
+          <h2 className="text-2xl sm:text-3xl font-black text-purple-700 mb-4 sm:mb-6 text-center">
             🌈 What Can You Make? 🌈
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-lg font-bold">
-            <div className="bg-gradient-to-r from-purple-200 to-purple-300 p-4 rounded-2xl border-4 border-purple-400">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-sm sm:text-lg font-bold">
+            <div className="bg-gradient-to-r from-purple-200 to-purple-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-purple-400">
               🔴 Red + 🔵 Blue = 💜 Purple
             </div>
-            <div className="bg-gradient-to-r from-orange-200 to-orange-300 p-4 rounded-2xl border-4 border-orange-400">
+            <div className="bg-gradient-to-r from-orange-200 to-orange-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-orange-400">
               🔴 Red + 💛 Yellow = 🟠 Orange
             </div>
-            <div className="bg-gradient-to-r from-green-200 to-green-300 p-4 rounded-2xl border-4 border-green-400">
+            <div className="bg-gradient-to-r from-green-200 to-green-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-green-400">
               🔵 Blue + 💛 Yellow = 💚 Green
             </div>
-            <div className="bg-gradient-to-r from-pink-200 to-pink-300 p-4 rounded-2xl border-4 border-pink-400">
+            <div className="bg-gradient-to-r from-pink-200 to-pink-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-pink-400">
               🔴 Red + ⚪ White = 🩷 Pink
             </div>
-            <div className="bg-gradient-to-r from-gray-200 to-gray-300 p-4 rounded-2xl border-4 border-gray-400">
+            <div className="bg-gradient-to-r from-gray-200 to-gray-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-gray-400">
               ⚪ White + ⚫ Black = 🩶 Grey
             </div>
-            <div className="bg-gradient-to-r from-blue-200 to-blue-300 p-4 rounded-2xl border-4 border-blue-400">
+            <div className="bg-gradient-to-r from-blue-200 to-blue-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-blue-400">
               🔵 Blue + ⚪ White = 💙 Light Blue
             </div>
           </div>
