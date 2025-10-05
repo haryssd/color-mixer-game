@@ -1,9 +1,15 @@
 import { useState } from 'react';
 import { Sparkles, Star } from 'lucide-react';
 
+type ColorType = {
+  name: string;
+  value: string;
+  emoji: string;
+};
+
 function App() {
-  const [dropZone1, setDropZone1] = useState<any>(null);
-  const [dropZone2, setDropZone2] = useState<any>(null);
+  const [dropZone1, setDropZone1] = useState<ColorType | null>(null);
+  const [dropZone2, setDropZone2] = useState<ColorType | null>(null);
   const [resultColor, setResultColor] = useState<string | null>(null);
   const [resultText, setResultText] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
@@ -52,7 +58,7 @@ function App() {
     }, 1000);
   };
 
-  const selectColor = (color: any, zone: number) => {
+  const selectColor = (color: ColorType, zone: number) => {
     if (zone === 1) {
       setDropZone1(color);
     } else {
