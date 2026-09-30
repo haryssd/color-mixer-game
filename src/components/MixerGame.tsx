@@ -73,7 +73,7 @@ function MixerGame({
           <div className="text-center text-xs sm:text-2xl md:text-3xl font-black text-purple-800 space-y-1 sm:space-y-0">
             <div className="sm:inline">1️⃣ Pilih satu warna</div>
             <div className="sm:inline sm:before:content-['_→_']">2️⃣ Pilih warna lain</div>
-            <div className="sm:inline sm:before:content-['_→_']">3️⃣ Tekan CAMPUR!</div>
+            <div className="sm:inline sm:before:content-['_→_']">3️⃣ CAMPUR!</div>
           </div>
           {instructions && (
             <p className="text-center text-xs sm:text-base font-bold text-purple-700 mt-2 sm:mt-3">
