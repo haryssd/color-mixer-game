@@ -1,110 +1,40 @@
 import { useState } from 'react';
-import { Sparkles, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
+import PrimerPage from './pages/PrimerPage';
+import SekunderPage from './pages/SekunderPage';
+import TertierPage from './pages/TertierPage';
 
-type ColorType = {
-  name: string;
-  value: string;
-  emoji: string;
-};
+type Page = 'primer' | 'sekunder' | 'tertier';
+
+const tabs: { id: Page; label: string }[] = [
+  { id: 'primer', label: '🔴 Warna Primer' },
+  { id: 'sekunder', label: '🟣 Warna Sekunder' },
+  { id: 'tertier', label: '🌈 Warna Tertier' },
+];
 
 function App() {
-  const [dropZone1, setDropZone1] = useState<ColorType | null>(null);
-  const [dropZone2, setDropZone2] = useState<ColorType | null>(null);
-  const [resultColor, setResultColor] = useState<string | null>(null);
-  const [resultText, setResultText] = useState('');
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [page, setPage] = useState<Page>('primer');
   const [score, setScore] = useState(0);
-  const [stars, setStars] = useState<Array<{id: number, x: number, y: number}>>([]);
-
-  const colors = [
-    { name: 'Red', value: '#FF0000', emoji: '🔴' },
-    { name: 'Blue', value: '#0000FF', emoji: '🔵' },
-    { name: 'Yellow', value: '#FFD700', emoji: '💛' },
-    { name: 'White', value: '#FFFFFF', emoji: '⚪' },
-    { name: 'Black', value: '#1a1a1a', emoji: '⚫' },
-  ];
-
-  const mixingRules: Record<string, {result: string, name: string, emoji: string}> = {
-    'Red-Blue': { result: '#9932CC', name: 'Purple', emoji: '💜' },
-    'Blue-Red': { result: '#9932CC', name: 'Purple', emoji: '💜' },
-    'Red-Yellow': { result: '#FF8C00', name: 'Orange', emoji: '🟠' },
-    'Yellow-Red': { result: '#FF8C00', name: 'Orange', emoji: '🟠' },
-    'Blue-Yellow': { result: '#32CD32', name: 'Green', emoji: '💚' },
-    'Yellow-Blue': { result: '#32CD32', name: 'Green', emoji: '💚' },
-    'White-Black': { result: '#808080', name: 'Grey', emoji: '🩶' },
-    'Black-White': { result: '#808080', name: 'Grey', emoji: '🩶' },
-    'Red-White': { result: '#FFB6C1', name: 'Pink', emoji: '🩷' },
-    'White-Red': { result: '#FFB6C1', name: 'Pink', emoji: '🩷' },
-    'Blue-White': { result: '#87CEEB', name: 'Light Blue', emoji: '💙' },
-    'White-Blue': { result: '#87CEEB', name: 'Light Blue', emoji: '💙' },
-    'Yellow-White': { result: '#FFFFE0', name: 'Light Yellow', emoji: '💛' },
-    'White-Yellow': { result: '#FFFFE0', name: 'Light Yellow', emoji: '💛' },
-    'Black-Red': { result: '#8B0000', name: 'Dark Red', emoji: '❤️' },
-    'Red-Black': { result: '#8B0000', name: 'Dark Red', emoji: '❤️' },
-    'Black-Blue': { result: '#000080', name: 'Dark Blue', emoji: '💙' },
-    'Blue-Black': { result: '#000080', name: 'Dark Blue', emoji: '💙' },
-    'Yellow-Black': { result: '#8B8000', name: 'Dark Yellow', emoji: '' },
-    'Black-Yellow': { result: '#8B8000', name: 'Dark Yellow', emoji: '' },
-  };
+  const [stars, setStars] = useState<Array<{ id: number; x: number; y: number }>>([]);
 
   const createStar = () => {
     const id = Date.now() + Math.random();
     const newStar = {
       id,
       x: Math.random() * 100,
-      y: Math.random() * 100
+      y: Math.random() * 100,
     };
-    setStars(prev => [...prev, newStar]);
+    setStars((prev) => [...prev, newStar]);
     setTimeout(() => {
-      setStars(prev => prev.filter(star => star.id !== id));
+      setStars((prev) => prev.filter((star) => star.id !== id));
     }, 1000);
   };
 
-  const selectColor = (color: ColorType, zone: number) => {
-    if (zone === 1) {
-      setDropZone1(color);
-    } else {
-      setDropZone2(color);
+  const handleCorrectMix = () => {
+    setScore((s) => s + 1);
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => createStar(), i * 100);
     }
-    setShowSuccess(false);
-  };
-
-  const mixColors = () => {
-    if (!dropZone1 || !dropZone2) {
-      setResultText('Pick 2 colors first!');
-      setResultColor(null);
-      return;
-    }
-
-    const key = `${dropZone1.name}-${dropZone2.name}`;
-    const mixture = mixingRules[key];
-
-    if (mixture) {
-      setResultColor(mixture.result);
-      setResultText(`${dropZone1.emoji} + ${dropZone2.emoji} = ${mixture.emoji} ${mixture.name}!`);
-      setShowSuccess(true);
-      setScore(score + 1);
-      
-      for (let i = 0; i < 5; i++) {
-        setTimeout(() => createStar(), i * 100);
-      }
-      
-      setTimeout(() => setShowSuccess(false), 2500);
-    } else if (dropZone1.name === dropZone2.name) {
-      setResultColor(dropZone1.value);
-      setResultText(`${dropZone1.emoji} + ${dropZone2.emoji} = ${dropZone1.emoji} ${dropZone1.name}!`);
-    } else {
-      setResultText(`Hmm... try different colors!`);
-      setResultColor('#D3D3D3');
-    }
-  };
-
-  const clearAll = () => {
-    setDropZone1(null);
-    setDropZone2(null);
-    setResultColor(null);
-    setResultText('');
-    setShowSuccess(false);
   };
 
   return (
@@ -119,7 +49,7 @@ function App() {
                 onClick={() => setScore(0)}
                 className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all hover:scale-110 active:scale-95"
               >
-                Reset
+                Set Semula
               </button>
             )}
           </div>
@@ -127,7 +57,7 @@ function App() {
       </div>
 
       <div className="max-w-5xl mx-auto">
-        {stars.map(star => (
+        {stars.map((star) => (
           <div
             key={star.id}
             className="fixed pointer-events-none animate-ping"
@@ -141,162 +71,39 @@ function App() {
         ))}
 
         <div className="text-center mb-4 sm:mb-6 pt-16 sm:pt-4">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white mb-2 sm:mb-3 drop-shadow-lg" style={{
-            textShadow: '3px 3px 0px #FF1493, 6px 6px 0px #9370DB'
-          }}>
-            🎨 COLOR MIXER! 🎨
+          <h1
+            className="text-4xl sm:text-6xl md:text-7xl font-black text-white mb-2 sm:mb-3 drop-shadow-lg"
+            style={{
+              textShadow: '3px 3px 0px #FF1493, 6px 6px 0px #9370DB',
+            }}
+          >
+            🎨 RONAMIX! 🎨
           </h1>
-          <p className="text-xl sm:text-3xl font-bold text-white drop-shadow-md">Mix colors and make magic!</p>
+          <p className="text-xl sm:text-3xl font-bold text-white drop-shadow-md">Campurkan warna dan cipta keajaiban!</p>
           <p className="text-sm sm:text-xl font-bold text-purple-800 mt-2 bg-white bg-opacity-80 inline-block px-4 py-1 sm:px-6 sm:py-2 rounded-full">
-            by Teacher Nisrina
+            oleh Cikgu Nisrina
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-10 mb-4 sm:mb-6 border-4 sm:border-8 border-purple-400">
-          <div className="bg-gradient-to-r from-yellow-200 to-orange-200 rounded-2xl sm:rounded-3xl p-3 sm:p-6 mb-4 sm:mb-8 border-2 sm:border-4 border-yellow-400 shadow-lg">
-            <div className="text-center text-xs sm:text-2xl md:text-3xl font-black text-purple-800 space-y-1 sm:space-y-0">
-              <div className="sm:inline">1️⃣ Pick a color</div>
-              <div className="sm:inline sm:before:content-['_→_']">2️⃣ Pick another color</div>
-              <div className="sm:inline sm:before:content-['_→_']">3️⃣ Press MIX!</div>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 mb-4 sm:mb-8">
-            <div className="text-center w-full sm:w-auto">
-              <p className="text-lg sm:text-2xl font-black text-purple-700 mb-2 sm:mb-3">First Color</p>
-              <div
-                className="w-36 h-36 sm:w-48 sm:h-48 mx-auto rounded-2xl sm:rounded-3xl border-4 sm:border-8 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 shadow-xl"
-                style={{
-                  backgroundColor: dropZone1 ? dropZone1.value : '#f8f8f8',
-                  borderColor: dropZone1 ? dropZone1.value : '#ccc'
-                }}
-              >
-                {dropZone1 ? (
-                  <>
-                    <span className="text-5xl sm:text-7xl mb-1 sm:mb-2">{dropZone1.emoji}</span>
-                    <span className="text-lg sm:text-2xl font-bold" style={{
-                      color: dropZone1.name === 'White' ? '#333' : '#fff',
-                      textShadow: dropZone1.name === 'White' ? 'none' : '2px 2px 4px rgba(0,0,0,0.5)'
-                    }}>{dropZone1.name}</span>
-                  </>
-                ) : (
-                  <span className="text-6xl sm:text-8xl">❓</span>
-                )}
-              </div>
-            </div>
-
-            <div className="flex items-center">
-              <span className="text-5xl sm:text-8xl font-black text-purple-600 animate-pulse">+</span>
-            </div>
-
-            <div className="text-center w-full sm:w-auto">
-              <p className="text-lg sm:text-2xl font-black text-purple-700 mb-2 sm:mb-3">Second Color</p>
-              <div
-                className="w-36 h-36 sm:w-48 sm:h-48 mx-auto rounded-2xl sm:rounded-3xl border-4 sm:border-8 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 shadow-xl"
-                style={{
-                  backgroundColor: dropZone2 ? dropZone2.value : '#f8f8f8',
-                  borderColor: dropZone2 ? dropZone2.value : '#ccc'
-                }}
-              >
-                {dropZone2 ? (
-                  <>
-                    <span className="text-5xl sm:text-7xl mb-1 sm:mb-2">{dropZone2.emoji}</span>
-                    <span className="text-lg sm:text-2xl font-bold" style={{
-                      color: dropZone2.name === 'White' ? '#333' : '#fff',
-                      textShadow: dropZone2.name === 'White' ? 'none' : '2px 2px 4px rgba(0,0,0,0.5)'
-                    }}>{dropZone2.name}</span>
-                  </>
-                ) : (
-                  <span className="text-6xl sm:text-8xl">❓</span>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-4 mb-4 sm:mb-8 max-w-4xl mx-auto">
-            {colors.map((color) => (
-              <button
-                key={color.name}
-                onClick={() => {
-                  if (!dropZone1) selectColor(color, 1);
-                  else if (!dropZone2) selectColor(color, 2);
-                }}
-                className="h-20 sm:h-28 rounded-xl sm:rounded-2xl transition-all hover:scale-110 active:scale-95 shadow-xl font-black text-base sm:text-xl flex flex-col items-center justify-center gap-1 sm:gap-2"
-                style={{
-                  backgroundColor: color.value,
-                  borderWidth: '4px',
-                  borderColor: '#333',
-                  color: color.name === 'White' ? '#000' : '#FFF',
-                  textShadow: color.name === 'White' ? 'none' : '2px 2px 4px rgba(0,0,0,0.8)'
-                }}
-              >
-                <span className="text-2xl sm:text-4xl">{color.emoji}</span>
-                <span className="text-xs sm:text-base">{color.name}</span>
-              </button>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-3 sm:gap-4 mb-4 sm:mb-8">
+        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+          {tabs.map((tab) => (
             <button
-              onClick={mixColors}
-              className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white px-8 py-4 sm:px-16 sm:py-6 rounded-2xl sm:rounded-3xl text-2xl sm:text-4xl font-black shadow-2xl hover:scale-105 transition-all active:scale-95 w-full"
-              style={{ borderWidth: '4px', borderColor: '#166534' }}
+              key={tab.id}
+              onClick={() => setPage(tab.id)}
+              className={`px-4 py-3 sm:px-8 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-xl font-black shadow-xl transition-all hover:scale-105 active:scale-95 border-2 sm:border-4 ${
+                page === tab.id
+                  ? 'bg-white text-purple-800 border-purple-600'
+                  : 'bg-purple-800 bg-opacity-40 text-white border-white border-opacity-60'
+              }`}
             >
-              🧪 MIX IT! 🧪
+              {tab.label}
             </button>
-            <button
-              onClick={clearAll}
-              className="bg-gradient-to-r from-red-400 via-orange-500 to-red-600 text-white px-8 py-4 sm:px-12 sm:py-6 rounded-2xl sm:rounded-3xl text-xl sm:text-3xl font-black shadow-2xl hover:scale-105 transition-all active:scale-95 flex items-center justify-center gap-2 sm:gap-3 w-full"
-              style={{ borderWidth: '4px', borderColor: '#991b1b' }}
-            >
-              🔄 START OVER
-            </button>
-          </div>
-
-          {resultColor && (
-            <div className="relative">
-              {showSuccess && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                  <Sparkles size={80} className="sm:w-[120px] sm:h-[120px] text-yellow-400 animate-spin" />
-                </div>
-              )}
-              <div
-                className="w-full min-h-32 sm:min-h-48 rounded-2xl sm:rounded-3xl border-4 sm:border-8 border-purple-600 flex items-center justify-center transition-all duration-700 shadow-2xl p-4 sm:p-6"
-                style={{ backgroundColor: resultColor }}
-              >
-                <div className="bg-white bg-opacity-95 px-4 py-3 sm:px-8 sm:py-6 rounded-xl sm:rounded-2xl shadow-lg border-2 sm:border-4 border-purple-400">
-                  <p className="text-xl sm:text-3xl md:text-4xl font-black text-center text-purple-800">{resultText}</p>
-                </div>
-              </div>
-            </div>
-          )}
+          ))}
         </div>
 
-        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 border-4 sm:border-8 border-pink-400">
-          <h2 className="text-2xl sm:text-3xl font-black text-purple-700 mb-4 sm:mb-6 text-center">
-            🌈 What Can You Make? 🌈
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-sm sm:text-lg font-bold">
-            <div className="bg-gradient-to-r from-purple-200 to-purple-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-purple-400">
-              🔴 Red + 🔵 Blue = 💜 Purple
-            </div>
-            <div className="bg-gradient-to-r from-orange-200 to-orange-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-orange-400">
-              🔴 Red + 💛 Yellow = 🟠 Orange
-            </div>
-            <div className="bg-gradient-to-r from-green-200 to-green-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-green-400">
-              🔵 Blue + 💛 Yellow = 💚 Green
-            </div>
-            <div className="bg-gradient-to-r from-pink-200 to-pink-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-pink-400">
-              🔴 Red + ⚪ White = 🩷 Pink
-            </div>
-            <div className="bg-gradient-to-r from-gray-200 to-gray-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-gray-400">
-              ⚪ White + ⚫ Black = 🩶 Grey
-            </div>
-            <div className="bg-gradient-to-r from-blue-200 to-blue-300 p-3 sm:p-4 rounded-xl sm:rounded-2xl border-2 sm:border-4 border-blue-400">
-              🔵 Blue + ⚪ White = 💙 Light Blue
-            </div>
-          </div>
-        </div>
+        {page === 'primer' && <PrimerPage />}
+        {page === 'sekunder' && <SekunderPage onCorrectMix={handleCorrectMix} />}
+        {page === 'tertier' && <TertierPage onCorrectMix={handleCorrectMix} />}
       </div>
     </div>
   );
