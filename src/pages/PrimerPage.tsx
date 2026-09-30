@@ -1,11 +1,5 @@
 import { primaryColors } from '../data/colors';
 
-const descriptions: Record<string, string> = {
-  Merah: 'Warna dasar yang cerah dan hangat!',
-  Biru: 'Warna dasar yang sejuk seperti langit dan laut!',
-  Kuning: 'Warna dasar yang ceria seperti matahari!',
-};
-
 function PrimerPage() {
   return (
     <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-10 border-4 sm:border-8 border-purple-400">
@@ -29,12 +23,6 @@ function PrimerPage() {
               style={{ color: '#fff', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
             >
               {color.name}
-            </span>
-            <span
-              className="text-sm sm:text-base font-bold"
-              style={{ color: '#fff', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
-            >
-              {descriptions[color.name]}
             </span>
           </div>
         ))}
