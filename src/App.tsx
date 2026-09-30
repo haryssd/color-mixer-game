@@ -79,7 +79,6 @@ function App() {
           >
             🎨 RONAMIX! 🎨
           </h1>
-          <p className="text-xl sm:text-3xl font-bold text-white drop-shadow-md">Campurkan warna dan cipta keajaiban!</p>
           <p className="text-sm sm:text-xl font-bold text-purple-800 mt-2 bg-white bg-opacity-80 inline-block px-4 py-1 sm:px-6 sm:py-2 rounded-full">
             oleh Cikgu Nisrina
           </p>
